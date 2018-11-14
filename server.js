@@ -1,23 +1,10 @@
-const Hapi = require('hapi');
-const rutas = require('./rutas');
-const server = Hapi.Server({
-    host: 'localhost',
-    port: 3000
-});
+const http = require('http');
 
+const server = http.createServer(function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+        message: 'Hola mundo'
+    }));
+})
 
-server.route(rutas);
-
-async function start() {
-    try {
-        await server.start();
-    } catch (err) {
-        console.log(err);
-        process.exit(1);
-
-    }
-    console.log('Server running at:', server.info.uri);
-
-}
-
-start();
+server.listen(3000);
