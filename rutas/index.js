@@ -5,9 +5,19 @@ const lista = [1, 2, 3];
 module.exports = 
     [
         {
+            method: 'GET',
+            path: '/carro/{id}',
+            handler:Handlers.carroHandler.BuscarCarrosAsync
+        },
+        {
+            method: 'GET',
+            path: '/carro',
+            handler:Handlers.carroHandler.ListarCarrosAsync
+        },
+        {
             method: 'POST',
             path: '/carro',
-            handler:Handlers.carroHandler.agregarCarros
+            handler:Handlers.carroHandler.agregarCarrosAsyncAwait
         },
         {
             method: 'GET',
