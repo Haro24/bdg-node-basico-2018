@@ -3,8 +3,12 @@ const Carro = require('../Models/Carro');
 
 module.exports.ListarCarrosAsync = async (req, h) => {
     try {
-        let resultado;
-        console.log('query', req.query);
+
+
+        const { preTokenVal } = req.pre;
+        if (preTokenVal == -1) {
+            return h.response({ error: 'Error autenticacion' });
+        }
         if (!req.query.id) {
             return await Carro.find();
         }
@@ -18,15 +22,52 @@ module.exports.ListarCarrosAsync = async (req, h) => {
 
 module.exports.BuscarCarrosAsync = async (req, h) => {
     try {
+        const { preTokenVal } = req.pre;
+        if (preTokenVal == -1) {
+            return h.response({ error: 'Error autenticacion' });
+        }
         let Carro = await Carro.findById({ _id: req.params.id })
         return h.response(Carro);
     }
     catch (error) {
         return h.response(error);
     }
-
-
 }
+
+module.exports.ActualizarCarrosAsyncAwait = async (req, h) => {
+    try {
+        const { preTokenVal } = req.pre;
+        if (preTokenVal == -1) {
+            return h.response({ error: 'Error autenticacion' });
+        }
+        const carroActualizado = await Carro.findByIdAndUpdate(req.query.id, req.payload.data);
+        return h.response(carroActualizado);
+        //return await Carro.findOneAndUpdate({ _id: req.query.id}, req.payload.data);
+
+
+    }
+    catch (error) {
+        return h.response(error);
+    }
+}
+
+module.exports.EliminarCarrosAsyncAwait = async (req, h) => {
+    try {
+        const { preTokenVal } = req.pre;
+        if (preTokenVal == -1) {
+            return h.response({ error: 'Error autenticacion' });
+        }
+        const carroEliminado = await Carro.findByIdAndDelete(req.query.id);
+        return h.response(carroEliminado);
+        //return await Carro.findOneAndUpdate({ _id: req.query.id}, req.payload.data);
+
+
+    }
+    catch (error) {
+        return h.response(error);
+    }
+}
+
 
 module.exports.agregarCarrosPromise = (req, h) => {
     return Carro.create(req.payload.data)
@@ -37,6 +78,10 @@ module.exports.agregarCarrosPromise = (req, h) => {
 
 module.exports.agregarCarrosAsyncAwait = async (req, h) => {
     try {
+        const { preTokenVal } = req.pre;
+        if (preTokenVal == -1) {
+            return h.response({ error: 'Error autenticacion' });
+        }
         const carroAgregado = await Carro.create(req.payload.data);
         console.log('Asybc/Wait', carroAgregado);
         console.log(await fAsync());
@@ -89,5 +134,4 @@ carro.save((err, carro) => {
 return h.response(req.payload.data);*/
 
 }
-
 
