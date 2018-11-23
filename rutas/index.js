@@ -2,28 +2,58 @@ const Handlers = require('../Handlers');
 const lista = [1, 2, 3];
 
 
-module.exports = 
+module.exports =
     [
         {
-            method: 'GET',
-            path: '/carro/{id}',
-            handler:Handlers.carroHandler.BuscarCarrosAsync
+            method: 'DELETE',
+            path: '/carro',
+            config: {
+                pre: [
+                    { method: Handlers.preHandler.preValidar, assign: 'preTokenVal' }
+                ]
+            },
+            handler: Handlers.carroHandler.EliminarCarrosAsyncAwait
+        },
+        {
+            method: 'PUT',
+            path: '/carro',
+            config: {
+                pre: [
+                    { method: Handlers.preHandler.preValidar, assign: 'preTokenVal' }
+                ]
+            },
+            handler: Handlers.carroHandler.ActualizarCarrosAsyncAwait
         },
         {
             method: 'GET',
             path: '/carro',
-            handler:Handlers.carroHandler.ListarCarrosAsync
+            config: {
+                pre: [
+                    { method: Handlers.preHandler.preValidar, assign: 'preTokenVal' }
+                ]
+            },
+            handler: Handlers.carroHandler.ListarCarrosAsync
         },
         {
             method: 'POST',
             path: '/carro',
-            handler:Handlers.carroHandler.agregarCarrosAsyncAwait
+            config: {
+                pre: [
+                    { method: Handlers.preHandler.preValidar, assign: 'preTokenVal' }
+                ]
+            },
+            handler: Handlers.carroHandler.agregarCarrosAsyncAwait
         },
         {
             method: 'GET',
             path: '/lista/{id}',
+            config: {
+                pre: [
+                    { method: Handlers.preHandler.preValidar, assign: 'preTokenVal' }
+                ]
+            },
             handler: (req, h) => {
-                return { data: lista[req.params.id]};
+                return { data: lista[req.params.id] };
             }
         },
         {
@@ -54,10 +84,10 @@ module.exports =
             method: 'DELETE',
             path: '/lista/{index}',
             handler: (req, h) => {
-                lista.splice(req.params.index,1);
+                lista.splice(req.params.index, 1);
                 return { data: lista };
             }
-        }    
+        }
     ]
 
 
