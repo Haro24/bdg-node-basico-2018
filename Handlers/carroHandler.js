@@ -1,13 +1,15 @@
 const Carro = require('../Models/Carro');
 
-
+/**
+ * 
+ */
 module.exports.ListarCarrosAsync = async (req, h) => {
     try {
 
 
         const { preTokenVal } = req.pre;
         if (preTokenVal == -1) {
-            return h.response({ error: 'Error autenticacion' });
+            return h.response({ error: preTokenVal });
         }
         if (!req.query.id) {
             return await Carro.find();
@@ -24,7 +26,7 @@ module.exports.BuscarCarrosAsync = async (req, h) => {
     try {
         const { preTokenVal } = req.pre;
         if (preTokenVal == -1) {
-            return h.response({ error: 'Error autenticacion' });
+            return h.response({ error: preTokenVal });
         }
         let Carro = await Carro.findById({ _id: req.params.id })
         return h.response(Carro);
@@ -38,7 +40,7 @@ module.exports.ActualizarCarrosAsyncAwait = async (req, h) => {
     try {
         const { preTokenVal } = req.pre;
         if (preTokenVal == -1) {
-            return h.response({ error: 'Error autenticacion' });
+            return h.response({ error: preTokenVal });
         }
         const carroActualizado = await Carro.findByIdAndUpdate(req.query.id, req.payload.data);
         return h.response(carroActualizado);
@@ -55,7 +57,7 @@ module.exports.EliminarCarrosAsyncAwait = async (req, h) => {
     try {
         const { preTokenVal } = req.pre;
         if (preTokenVal == -1) {
-            return h.response({ error: 'Error autenticacion' });
+            return h.response({ error: preTokenVal});
         }
         const carroEliminado = await Carro.findByIdAndDelete(req.query.id);
         return h.response(carroEliminado);
@@ -80,7 +82,7 @@ module.exports.agregarCarrosAsyncAwait = async (req, h) => {
     try {
         const { preTokenVal } = req.pre;
         if (preTokenVal == -1) {
-            return h.response({ error: 'Error autenticacion' });
+            return h.response({ error: preTokenVal });
         }
         const carroAgregado = await Carro.create(req.payload.data);
         console.log('Asybc/Wait', carroAgregado);

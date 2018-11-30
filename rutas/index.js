@@ -5,6 +5,21 @@ const lista = [1, 2, 3];
 module.exports =
     [
         {
+            method: 'POST',
+            path: '/login',
+            handler: Handlers.usuarioHandler.login
+        },
+        {
+            method: 'POST',
+            path: '/usuario',
+            handler: Handlers.usuarioHandler.addUsuario
+        },        
+        {
+            method: 'POST',
+            path: '/generartoken',
+            handler: Handlers.token.TokenSign
+        },       
+        {
             method: 'DELETE',
             path: '/carro',
             config: {
